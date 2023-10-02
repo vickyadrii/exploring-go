@@ -4,3 +4,4 @@ Ini perubahan 1 dari remote
 Ini dari git clone
 
 Conflict dari dev B
+Ini memnbuat conflict dari dev A

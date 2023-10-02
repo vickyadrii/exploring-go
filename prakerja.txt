@@ -2,3 +2,5 @@ Ini dari git remote
 Ini perubahan 1 dari remote 
 
 Ini dari git clone
+
+Conflict dari dev B

@@ -11,35 +11,35 @@ func add(a, b int)int {
 }
 
 func main() {
-	// add(1, 2)
+	add(1, 2)
 
-	// // Array
-	// 	// Banyak data
-	// 	// 1 tipe
-	// 	// index
-	// 	// ukuran fix
+	// Array
+		// Banyak data
+		// 1 tipe
+		// index
+		// ukuran fix
 
-	// scoreData := [5]int{1,2,3,4,5}
+	scoreData := [5]int{1,2,3,4,5}
 
-	// for i := 0; i < len(scoreData); i++ {
-	// 	fmt.Println(scoreData[i]);
-	// }
+	for i := 0; i < len(scoreData); i++ {
+		fmt.Println(scoreData[i]);
+	}
 
-	// fmt.Println(scoreData)
+	fmt.Println(scoreData)
 
 	// Slice
-		// Banyak data
-		// index
-		// dinamis
+		// 	Banyak data
+		// 	index
+		// 	dinamis
 	
 
-	// newScore := make([]int, 10)
-	// var score []int = []int{1,2,3}
+	newScore := make([]int, 10)
+	var score []int = []int{1,2,3}
 
-	// fmt.Println(newScore)
-	// score = append(score, 10) // Tambah data menggunakan append
-	// score[0] = 104
-	// fmt.Println(score)
+	fmt.Println(newScore)
+	score = append(score, 10) // Tambah data menggunakan append
+	score[0] = 104
+	fmt.Println(score)
 
 
 	// Map
@@ -48,8 +48,7 @@ func main() {
 		// dinamis
 		// key unique
 	
-	// Januari => 10jt
-	// Februari => 20jt
+
 	var dataPenjualan = make(map[string]int)
 
 	dataPenjualan["Januari"] = 10000

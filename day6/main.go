@@ -12,14 +12,15 @@ import (
 var DB *gorm.DB
 
 type Users struct {
-	ID           uint   `gorm:"primaryKey" json:"id"`
-	Fullname     string `json:"fullname"`
-	Username     string `json:"username"`
-	PhotoProfile string `json:"photo_profile"`
+	// gorm.Model
+	ID           uint   `gorm:"primaryKey" json:"id" form:"id"`
+	Fullname     string `json:"fullname" form:"fullname"`
+	Username     string `json:"username" form:"username"`
+	PhotoProfile string `json:"photo_profile" form:"photo_profile"`
 }
 
 type Tweets struct {
-	ID     uint   `gorm:"primarykey" json:"id"`
+	ID     uint   `gorm:"primaryKey" json:"id"`
 	Tweet  string `json:"tweet"`
 	UserId uint   `json:"user_id"`
 }
@@ -27,11 +28,10 @@ type Tweets struct {
 func InitDatabase() {
 	dsn := "root:@tcp(127.0.0.1:3306)/prakerja12?charset=utf8mb4&parseTime=True&loc=Local" // Database Source Name
 	var err error
-	DB, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{}) 
+	DB, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
 	}
-	InitMigration()
 
 }
 
@@ -51,8 +51,26 @@ func getUsersController(c echo.Context) error {
 		return result.Error
 	}
 
-	return c.JSON(http.StatusOK, map[string][]Users{
-		"data": users,
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"code":    200,
+		"data":    users,
+		"message": "success get all users",
+	})
+}
+
+func CreateUserController(c echo.Context) error {
+	users := Users{}
+	c.Bind(&users)
+
+	payload := DB.Save(&users)
+
+	if payload.Error != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, payload.Error)
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "success create new user",
+		"data":    users,
 	})
 }
 
@@ -74,6 +92,7 @@ func main() {
 	e := echo.New() // Create instance
 	e.GET("/", Home)
 	e.GET("/users", getUsersController)
+	e.POST("/users", CreateUserController)
 	e.GET("/tweets", getTweets)
 
 	e.Logger.Fatal(e.Start(":8000"))
